@@ -20,7 +20,7 @@ def init_db(db_path: str):
     conn.commit()
 
 # Save a snapshot's JSON data to disk and record its metadata in the database
-def save_snapshot(db_path: str, snap_dir: str, ip: str, timestamp: str, data: json) -> str:
+def save_snapshot(db_path: str, snap_dir: str, ip: str, timestamp: str, data: Dict[str, Any]) -> str:
   # Save JSON data to disk
   ip_dir = os.path.join(snap_dir, ip) # snapshots/<ip>/timestamp.json
   os.makedirs(ip_dir, exist_ok=True)
