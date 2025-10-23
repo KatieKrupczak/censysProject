@@ -61,7 +61,7 @@ def list_snapshots_for_host(db_path: str, ip: str) -> List[str]:
   return timestamps
 
 # Retrieve the JSON data for a specific snapshot by host IP and timestamp
-def get_snapshot_data(db_path: str, ip: str, timestamp: str) -> Optional[Dict[str, Any]]:
+def get_snapshot_json(db_path: str, ip: str, timestamp: str) -> Optional[Dict[str, Any]]:
   with sqlite3.connect(db_path) as conn:
     row = conn.execute(
       "SELECT path FROM snapshots WHERE ip = ? AND timestamp = ?",
