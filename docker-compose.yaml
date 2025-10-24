@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  api:
+    # Either use build + optional image (OK)
+    image: hostdiff-api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - DATA_DIR=/data
+    volumes:
+      - snapshots:/data
+    ports:
+      - "8000:8000"
+    # Use a healthcheck that doesn't require curl in the image
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health').read(); print('ok')"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  web:
+    image: hostdiff-web
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "5173:80"
+    # The frontend Dockerfile already proxies /api to api:8000 via nginx.conf
+    environment:
+      - VITE_API_BASE=/
+
+volumes:
+  snapshots:
