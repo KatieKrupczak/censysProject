@@ -1,4 +1,5 @@
 fastapi>=0.119.1
 pydantic>=2.12.3
 uvicorn>=0.38.0
-pytest==8.3.3
+pytest==8.3.3python-multipart
+python-multipart

@@ -20,7 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_DIR = os.getenv("DATA_DIR", "/data") 
+DATA_DIR = DATA_DIR = os.environ.get("DATA_DIR", os.path.abspath("./data"))
 DB_PATH = os.path.join(DATA_DIR, "snapshots.db")
 SNAP_DIR = os.path.join(DATA_DIR, "snapshots")
 
