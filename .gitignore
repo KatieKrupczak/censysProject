@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 **/*.pyc
 
+
 # Ignore data directory containing database and snapshots
 data/
 **/data/
