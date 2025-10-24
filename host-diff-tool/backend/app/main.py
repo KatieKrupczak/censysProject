@@ -83,11 +83,11 @@ def get_snapshot(ip: str, timestamp: str):
         raise HTTPException(status_code=404, detail="Snapshot not found")
     return data
 
-@app.get("/api/diff/{ip}/{ts1}/{ts2}") # endpoint to diff two snapshots for a host XXX
-def diff_snapshot(ip: str, ts1: str, ts2: str):
-    a_json = get_snapshot_json(DB_PATH, ip, ts1)
-    b_json = get_snapshot_json(DB_PATH, ip, ts2)
+@app.get("/api/diff") # endpoint to diff two snapshots for a host XXX
+def diff_snapshot(ip: str, timestamp1: str, timestamp2: str):
+    a_json = get_snapshot_json(DB_PATH, ip, timestamp1)
+    b_json = get_snapshot_json(DB_PATH, ip, timestamp2)
     if a_json is None or b_json is None:
         raise HTTPException(status_code=404, detail="One or both snapshots not found")
     diff = diff_snapshots(a_json, b_json)
-    return {"ip": ip, "ts1": ts1, "ts2": ts2, "diff": diff}
+    return {"ip": ip, "timestamp1": timestamp1, "timestamp2": timestamp2, "diff": diff}
