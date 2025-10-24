@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { getSnapshots } from '../api'
 
 
-export default function SnapshotPicker({ ip, a, b, onChange }:{ ip: string | null, a: string | null, b: string | null, onChange: (a: string | null, b: string | null) => void }){
+export default function SnapshotPicker({ ip, a, b, onChange, refreshKey }:{ ip: string | null, a: string | null, b: string | null, onChange: (a: string | null, b: string | null) => void, refreshKey?: number }) {
   const [timestamps, setTimestamps] = useState<string[]>([])
 
 
   useEffect(() => {
     if (!ip) { setTimestamps([]); return }
     getSnapshots(ip).then(r => setTimestamps(r.timestamps)).catch(console.error)
-  }, [ip])
+  }, [ip, refreshKey])
 
 
   return (

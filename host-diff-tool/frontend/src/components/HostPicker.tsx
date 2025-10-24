@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { getHosts } from '../api'
 
 
-export default function HostPicker({ value, onChange }: { value: string | null; onChange: (v: string | null) => void }) {
+export default function HostPicker({
+  value,
+  onChange,
+  refreshKey
+}: {
+  value: string | null
+  onChange: (v: string | null) => void
+  refreshKey?: number
+}) {
   const [hosts, setHosts] = useState<string[]>([])
 
 
   useEffect(() => {
     getHosts().then(h => setHosts(h.hosts)).catch(console.error)
-  }, [])
+  }, [refreshKey])
 
 
   return (
