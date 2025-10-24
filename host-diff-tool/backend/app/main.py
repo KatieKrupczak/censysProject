@@ -78,15 +78,15 @@ def get_snapshots(ip: str):
 
 @app.get("/api/snapshot/{ip}/{timestamp}") # endpoint to retrieve a specific snapshot's JSON data
 def get_snapshot(ip: str, timestamp: str):
-    data = get_snapshot_json(DB_PATH, SNAP_DIR, ip, timestamp)
+    data = get_snapshot_json(DB_PATH, ip, timestamp)
     if data is None:
         raise HTTPException(status_code=404, detail="Snapshot not found")
     return data
 
 @app.get("/api/diff/{ip}/{ts1}/{ts2}") # endpoint to diff two snapshots for a host XXX
 def diff_snapshot(ip: str, ts1: str, ts2: str):
-    a_json = get_snapshot_json(DB_PATH, SNAP_DIR, ip, ts1)
-    b_json = get_snapshot_json(DB_PATH, SNAP_DIR, ip, ts2)
+    a_json = get_snapshot_json(DB_PATH, ip, ts1)
+    b_json = get_snapshot_json(DB_PATH, ip, ts2)
     if a_json is None or b_json is None:
         raise HTTPException(status_code=404, detail="One or both snapshots not found")
     diff = diff_snapshots(a_json, b_json)
